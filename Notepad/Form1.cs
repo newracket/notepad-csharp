@@ -87,9 +87,5 @@ namespace Notepad {
             Text = _fileName;
             _lastSavedText = notepad.Text;
         }
-
-        private void PrintButton(object sender, EventArgs e) {
-            Utils.PrintFile(notepad.Text, _fileName);
-        }
     }
 }

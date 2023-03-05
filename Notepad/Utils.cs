@@ -42,25 +42,5 @@ namespace Notepad {
                 }
             }
         }
-        
-        public static void PrintFile(string text, string fileName) {
-            using (var printDialog = new PrintDialog()) {
-                printDialog.AllowCurrentPage = true;
-                printDialog.AllowPrintToFile = true;
-                
-                printDialog.Document = new PrintDocument();
-                printDialog.Document.DocumentName = fileName;
-                printDialog.Document.PrintPage += ((sender, e) => {
-                    e.Graphics.DrawString(text, new Font("Arial", 14), Brushes.Black, 10, 10);
-                });
-                
-                var result = printDialog.ShowDialog();
-                if (result == DialogResult.OK) {
-                    printDialog.Document.Print();
-                }
-                
-                // TODO: Make work for multiple pages
-            }
-        }
     }
 }
