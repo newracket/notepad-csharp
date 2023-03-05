@@ -1,5 +1,3 @@
 ﻿namespace Notepad {
-    public class Menu {
-        
-    }
+    public class Menu { }
 }

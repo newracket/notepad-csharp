@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Printing;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Forms;
 
 namespace Notepad {
@@ -16,9 +13,7 @@ namespace Notepad {
                 openFileDialog.ShowDialog();
                 var openFilePath = openFileDialog.FileName;
 
-                if (openFilePath == "") {
-                    return ("", "", "");
-                }
+                if (openFilePath == "") return ("", "", "");
 
                 var newText = File.ReadAllText(openFilePath);
                 var fileName = Path.GetFileName(openFilePath);
@@ -37,9 +32,7 @@ namespace Notepad {
                 saveFileDialog.ShowDialog();
                 var saveFilePath = saveFileDialog.FileName;
 
-                if (saveFilePath != "") {
-                    File.WriteAllText(saveFilePath, text);
-                }
+                if (saveFilePath != "") File.WriteAllText(saveFilePath, text);
             }
         }
     }

@@ -25,32 +25,40 @@ namespace Notepad {
             }
         }
 
-
         private void NewFileButton(object sender, EventArgs e) {
-            if (notepad.Text != _lastSavedText) {
-                var result = MessageBox.Show($"Do you want to save changes to {_fileName}?", "Notepad",
-                    MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-
-                switch (result) {
-                    case DialogResult.Yes:
-                        SaveFileButton(sender, e);
-                        break;
-                    case DialogResult.Cancel:
-                        return;
-                    case DialogResult.Abort:
-                    case DialogResult.Ignore:
-                    case DialogResult.No:
-                    case DialogResult.None:
-                    case DialogResult.OK:
-                    case DialogResult.Retry:
-                    default:
-                        break;
-                }
-            }
+            if (!RequestSave(sender, e)) return;
 
             _lastSavedText = notepad.Text = "";
             _filePath = null;
             Text = _fileName = "Unnamed";
+        }
+        
+
+        private bool RequestSave(object sender, EventArgs e) {
+            if (notepad.Text == _lastSavedText) {
+                return true;
+            }
+
+            var result = MessageBox.Show($"Do you want to save changes to {_fileName}?", "Notepad",
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+
+            switch (result) {
+                case DialogResult.Yes:
+                    SaveFileButton(sender, e);
+                    break;
+                case DialogResult.Cancel:
+                    return false;
+                case DialogResult.Abort:
+                case DialogResult.Ignore:
+                case DialogResult.No:
+                case DialogResult.None:
+                case DialogResult.OK:
+                case DialogResult.Retry:
+                default:
+                    break;
+            }
+
+            return true;
         }
 
         private void OpenFileButton(object sender, EventArgs e) {
@@ -86,6 +94,12 @@ namespace Notepad {
 
             Text = _fileName;
             _lastSavedText = notepad.Text;
+        }
+
+        private void ExitButton(object sender, EventArgs e) {
+            if (!RequestSave(sender, e)) return;
+            
+            Close();
         }
     }
 }
